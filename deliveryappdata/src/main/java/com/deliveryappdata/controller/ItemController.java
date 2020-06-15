@@ -48,6 +48,10 @@ public class ItemController {
         return (Collection<Item>) itemRepository.findAll();
     }
 
+
+    // This method is called when a post method on /orders endpoint is received.
+    // It converts the received object to a database friendly entity
+    // and saves it in a Spring repository, which persists new object to the database
     @PostMapping("/orders")
     ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) throws URISyntaxException{
         Order result = orderRepository.save(new Order(order.getTotalPrice(), order.getEmail(), order.getOrderDate()));

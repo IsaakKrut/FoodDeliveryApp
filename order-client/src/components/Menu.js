@@ -35,10 +35,12 @@ class Menu extends Component {
 
   render(){
 
-  //   let filtereditems = this.state.items.filter(item => item.category_id === '3');
-   // console.log(filtereditems.length);
    let categories = this.state.categories;
 
+    // This code is responsible for binding items with their corresponding categories
+    // to have them correctly displayed under each category
+    // Model then loops through each category and each item inside the category
+    
    if (!this.state.loading){
     this.state.categories.forEach(category=>{
      let itemArray = [];

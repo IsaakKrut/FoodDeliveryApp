@@ -20,6 +20,8 @@ class App extends Component {
     this.emptyCart = this.emptyCart.bind(this);
   }
 
+                    // Method deletes all items in the cart
+                    // This method is passed to a Checkout component via properties
   emptyCart(){
     this.setState({
       items: [],
@@ -28,6 +30,10 @@ class App extends Component {
     })
   }
 
+
+                    // Method receives an item and a quantity for this item and
+                    // updates the cart with these values
+                    // This method is passed to a Menu component via properties
   addToCart(item, quantity){
     console.log(quantity);
     item.quantity = quantity;
