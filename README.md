@@ -22,7 +22,7 @@ TODO:
 
 
 1. Add a success and failure page for user to be redirected to after the order is submitted.
-2. Email validation
+2. Email validation ✓
 3. Create a home page
 4. Authorization, additional features like order history for signed in users.
 5. Allow users to order from different places on the same website.
