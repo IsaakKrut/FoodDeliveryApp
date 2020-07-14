@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import {BrowserRouter as Router, Route } from 'react-router-dom';
 import '../App.css';
 
+import { createBrowserHistory } from 'history';
+
+
+
 import Header from './Header';
 import Home from './Home';
 import Menu from './Menu';
 import Checkout from './Checkout';
+import Success from './Success';
+import Failure from './Failure';
+
+const history = createBrowserHistory();
 
 class App extends Component {
 
@@ -14,10 +22,30 @@ class App extends Component {
     this.state = {
       items: [],
       total: 0.0,
-      empty: true
+      empty: true,
+      errorMessage: 'error',
+      email: 'email'
     }
     this.addToCart = this.addToCart.bind(this);
     this.emptyCart = this.emptyCart.bind(this);
+    this.setError = this.setError.bind(this);
+    this.setEmail = this.setEmail.bind(this);
+  }
+
+                  // Method sets an error message being passed to the failure page
+
+  setError(error){
+    this.setState({
+      errorMessage: error
+    });
+  }
+
+
+                  // Method sets an email for successful orders
+  setEmail(email){
+    this.setState({
+      email: email
+    });
   }
 
                     // Method deletes all items in the cart
@@ -54,19 +82,26 @@ class App extends Component {
   render(){
 
   return (
-    <Router>
+    <Router >
     <div className="App">
       <Header total={this.state.total}/>
       <Route path="/" component={Home} exact />
       <Route path="/menu" render={()=>
         <Menu total={this.state.total} 
         items={this.state.items} 
-        addToCart={this.addToCart}/>}  />
+        addToCart={this.addToCart}/>}  exact/>
       <Route path="/checkout" render={()=>
          <Checkout total={this.state.total}
+           history={history}
           items={this.state.items}
            empty={this.state.empty}
-           emptyCart={this.emptyCart}/>}  />
+           emptyCart={this.emptyCart}
+           setError={this.setError}
+           setEmail={this.setEmail}/>}  exact/>
+           <Route path="/failure" render={()=>
+         <Failure message={this.state.errorMessage}/>}  exact/>
+         <Route path="/success" render={()=>
+         <Success email={this.state.email}/>}  exact/>
     </div>
     </Router>
   )};
