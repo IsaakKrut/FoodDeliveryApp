@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import '../App.css';
 
 import { createBrowserHistory } from 'history';
@@ -82,27 +82,27 @@ class App extends Component {
   render(){
 
   return (
-    <Router >
-    <div className="App">
+    <Router >  
       <Header total={this.state.total}/>
-      <Route path="/" component={Home} exact />
-      <Route path="/menu" render={()=>
-        <Menu total={this.state.total} 
-        items={this.state.items} 
-        addToCart={this.addToCart}/>}  exact/>
-      <Route path="/checkout" render={()=>
-         <Checkout total={this.state.total}
-           history={history}
-          items={this.state.items}
-           empty={this.state.empty}
-           emptyCart={this.emptyCart}
-           setError={this.setError}
-           setEmail={this.setEmail}/>}  exact/>
-           <Route path="/failure" render={()=>
-         <Failure message={this.state.errorMessage}/>}  exact/>
-         <Route path="/success" render={()=>
-         <Success email={this.state.email}/>}  exact/>
-    </div>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/menu" render={()=>
+          <Menu total={this.state.total} 
+          items={this.state.items} 
+          addToCart={this.addToCart}/>}  />
+        <Route path="/checkout" render={()=>
+          <Checkout total={this.state.total}
+            history={history}
+            items={this.state.items}
+            empty={this.state.empty}
+            emptyCart={this.emptyCart}
+            setError={this.setError}
+            setEmail={this.setEmail}/>}  />
+            <Route path="/failure" render={()=>
+          <Failure message={this.state.errorMessage}/>}  />
+          <Route path="/success" render={()=>
+          <Success email={this.state.email}/>}  />
+    </Switch>
     </Router>
   )};
 }
