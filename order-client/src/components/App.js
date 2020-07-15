@@ -43,6 +43,7 @@ class App extends Component {
 
                   // Method sets an email for successful orders
   setEmail(email){
+    console.log(email);
     this.setState({
       email: email
     });
@@ -82,7 +83,8 @@ class App extends Component {
   render(){
 
   return (
-    <Router >  
+    <Router history={history}>  
+    <div>
       <Header total={this.state.total}/>
       <Switch>
         <Route path="/" component={Home} exact />
@@ -103,6 +105,7 @@ class App extends Component {
           <Route path="/success" render={()=>
           <Success email={this.state.email}/>}  />
     </Switch>
+    </div>
     </Router>
   )};
 }

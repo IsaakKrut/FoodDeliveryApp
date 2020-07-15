@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../css/Checkout.css';
 
+import { withRouter } from 'react-router-dom'
+
 class Checkout extends Component {
 
 
@@ -12,7 +14,7 @@ class Checkout extends Component {
         }
         this.emailChange = this.emailChange.bind(this);
         this.submitOrder = this.submitOrder.bind(this);
-        this.validateEmail = this.validateEmail.bind(this);
+        this.onSUbmit = this.onSubmit.bind(this);
         this.emailInput = React.createRef();
     }
 
@@ -41,9 +43,12 @@ class Checkout extends Component {
         })
     }
 
-    // This method validates email. Source:
+    // This method validates email and submits the order if it is valid
+    // Otherwise it alerts the user to enter a new one.
+    // Source:
     // https://www.w3resource.com/javascript/form/email-validation.php
-    validateEmail() {
+    onSubmit = (e)=> {
+        e.preventDefault();
         var email = this.state.email
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if(email.match(mailformat))
@@ -92,11 +97,10 @@ class Checkout extends Component {
             .then(response => response.json())
             .then(data => {
                  // After the transaction is approved resetting the state of our application
-                // to handle a new order and send user to a confirmation page
-                this.setState({
-                    email: '',
-                });
+                // to handle a new order
                 this.props.emptyCart();
+                
+                // Redirect user to a confirmation page and send the submitted email to this page as props
                 this.props.setEmail(this.state.email);
                 this.props.history.push("/success");
             })
@@ -176,7 +180,7 @@ class Checkout extends Component {
                 <button type="button" className="btn btn-secondary btn-lg" disabled={this.props.empty} onClick={this.props.emptyCart}>Empty Cart</button>
             </div>
             <div className="col-1">
-                <button type="button" className="btn btn-primary btn-lg" disabled={this.props.empty} onClick={this.validateEmail}>Checkout</button>
+                <button type="button" className="btn btn-primary btn-lg" disabled={this.props.empty} onClick={this.onSubmit}>Checkout</button>
             </div>
         </div>
         </form>
@@ -189,4 +193,4 @@ class Checkout extends Component {
 }
   
 
-export default Checkout;
+export default withRouter(Checkout);
