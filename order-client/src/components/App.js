@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import '../App.css';
 
-import { createBrowserHistory } from 'history';
 
 
 
@@ -10,10 +9,9 @@ import Header from './Header';
 import Home from './Home';
 import Menu from './Menu';
 import Checkout from './Checkout';
+import History from './History';
 import Success from './Success';
 import Failure from './Failure';
-
-const history = createBrowserHistory();
 
 class App extends Component {
 
@@ -24,7 +22,7 @@ class App extends Component {
       total: 0.0,
       empty: true,
       errorMessage: 'error',
-      email: 'email'
+      email: ''
     }
     this.addToCart = this.addToCart.bind(this);
     this.emptyCart = this.emptyCart.bind(this);
@@ -41,7 +39,7 @@ class App extends Component {
   }
 
 
-                  // Method sets an email for successful orders
+                  // Method sets an email for the current user
   setEmail(email){
     console.log(email);
     this.setState({
@@ -83,27 +81,37 @@ class App extends Component {
   render(){
 
   return (
-    <Router history={history}>  
+    <Router>  
     <div>
-      <Header total={this.state.total}/>
+      <Header total={this.state.total}
+          setEmail={this.setEmail}/>
       <Switch>
-        <Route path="/" component={Home} exact />
+        <Route path="/" component={Home} exact 
+        />
         <Route path="/menu" render={()=>
           <Menu total={this.state.total} 
           items={this.state.items} 
-          addToCart={this.addToCart}/>}  />
+          addToCart={this.addToCart}/>} 
+        />
         <Route path="/checkout" render={()=>
           <Checkout total={this.state.total}
-            history={history}
             items={this.state.items}
             empty={this.state.empty}
             emptyCart={this.emptyCart}
             setError={this.setError}
-            setEmail={this.setEmail}/>}  />
-            <Route path="/failure" render={()=>
-          <Failure message={this.state.errorMessage}/>}  />
-          <Route path="/success" render={()=>
-          <Success email={this.state.email}/>}  />
+            setEmail={this.setEmail}
+          />}  
+        />
+        <Route path="/failure" render={()=>
+          <Failure message={this.state.errorMessage}/>}  
+        />
+        <Route path="/success" render={()=>
+          <Success email={this.state.email}/>}  
+        />
+        <Route path="/history" render={()=>
+          <History email={this.state.email}
+          setEmail={this.setEmail}/>}  
+        />
     </Switch>
     </div>
     </Router>

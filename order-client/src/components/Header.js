@@ -3,6 +3,19 @@ import { NavLink } from 'react-router-dom'
 
 class Header extends Component {
 
+  constructor(props){
+    super(props);
+
+    
+    this.signOut = this.signOut.bind(this);
+  }
+
+
+      // Resets the state of the application and deletes the currently stored email for that session
+
+  signOut = () =>{
+    this.props.setEmail('');
+  }
 
   render(){
 
@@ -20,6 +33,12 @@ class Header extends Component {
         </li>
         <li className="nav-item active">
           <span className="navbar-brand"><NavLink to="/checkout" activeClassName="selected">Checkout CA${(Math.round(this.props.total * 100) / 100).toFixed(2)} </NavLink></span>
+        </li>
+        <li className="nav-item active">
+          <span className="navbar-brand"><NavLink to="/history" activeClassName="selected">Order History</NavLink></span>
+        </li>
+        <li className="nav-item active">
+          <span className="navbar-brand"> <button className="link-button" onClick={this.signOut}>Sign Out</button></span>
         </li>
       </ul>
     </div>

@@ -50,7 +50,7 @@ class Checkout extends Component {
     onSubmit = (e)=> {
         e.preventDefault();
         var email = this.state.email
-        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var mailformat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if(email.match(mailformat))
         {
         this.submitOrder();
@@ -155,8 +155,6 @@ class Checkout extends Component {
                     </tr>              
                 </tbody>
                 </table>
-                <h4>HST: CA${(Math.round(this.props.total * 0.13 * 100) / 100).toFixed(2)} </h4>
-                <h4>Your Total is CA${(Math.round(this.props.total * 1.13 * 100) / 100).toFixed(2)}</h4>
         </div>)
         }
 
@@ -168,10 +166,13 @@ class Checkout extends Component {
         <h1 className="text-center cart-label">Your Cart</h1>
             {container}
         </div>
-        <form name="form">
+        <form name="form" className="email-form">           
         <div className="row text-right">
-        <div className="col-5">
-            <label htmlFor="exampleFormControlInput1">Enter Email to Submit Your Order</label>
+            <div className="col-3">
+                {!this.props.empty ? (<h5>Your Total is CA${(Math.round(this.props.total * 1.13 * 100) / 100).toFixed(2)} </h5>) : (<div></div>)}             
+            </div>
+            <div className="col-2">
+                <label htmlFor="exampleFormControlInput1">Enter Email to Submit Your Order</label>
             </div>
         <div className="form-group col-2">        
             <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" ref={this.emailInput} disabled={this.props.empty} onChange={this.emailChange}/>

@@ -25,5 +25,5 @@ TODO:
 2. Email validation ✓
 3. Create a home page
 4. Authorization, additional features like order history for signed in users
-5. Allow users to order from different places on the same website
+5. Have an option to choose from multiple menus
  
