@@ -1,7 +1,10 @@
 package com.deliveryappdata.controller;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import com.deliveryappdata.beans.Category;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -60,6 +65,16 @@ public class ItemController {
             orderItemRepository.save(new OrderItem(item.getQuantity(),item.getOrderId(), item.getItemId()));
         });
         return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/orders")
+    @ResponseBody
+    public List<Order> getOrdersByEmail(@RequestParam(name = "email") String email){
+        List<Order> result = orderRepository.findByEmail(email);
+        result.forEach(order->{
+            order.setItems(orderItemRepository.findByOrderId(order.getId()));
+        });
+        return result;
     }
     
     

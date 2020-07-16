@@ -29,6 +29,10 @@ public class OrderItem {
         this.itemId = itemId;
     }
 
+    public OrderItem(){
+        
+    }
+
     public int getQuantity() {
         return quantity;
     }

@@ -1,6 +1,8 @@
 package com.deliveryappdata.beans;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -23,7 +25,7 @@ public class Order {
     private double totalPrice;
     
     @OneToMany
-    private Set<OrderItem> items = new HashSet<>();
+    private List<OrderItem> items = new ArrayList<>();
 
     @Column(name="email")
     private String email;
@@ -39,11 +41,11 @@ public class Order {
         return items.isEmpty();
     }
 
-    public Set<OrderItem> getItems() {
+    public List<OrderItem> getItems() {
         return items;
     }
 
-    public void setItems(Set<OrderItem> items) {
+    public void setItems(List<OrderItem> items) {
         this.items = items;
     }
 
@@ -82,6 +84,18 @@ public class Order {
         this.email = email;
         this.orderDate = orderDate;
     }
+
+    public Order(double totalPrice, List<OrderItem> items, String email, Timestamp orderDate) {
+        this.totalPrice = totalPrice;
+        this.items = items;
+        this.email = email;
+        this.orderDate = orderDate;
+    }
+
+    public Order() {
+    }
+
+    
     
     
     
